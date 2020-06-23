@@ -1,3 +1,4 @@
+import { Response, Request } from "http://deno.land/x/oak/mod.ts";
 import { Product } from "../types.ts";
 
 let products: Product[] = [{
@@ -14,7 +15,7 @@ let products: Product[] = [{
   price: 13.99,
 }];
 
-const getProducts = ({ response }: { response: any }) => {
+const getProducts = ({ response }: { response: Response }) => {
   response.body = {
     success: true,
     data: products,
@@ -22,7 +23,7 @@ const getProducts = ({ response }: { response: any }) => {
 };
 
 const getProduct = (
-  { response, params }: { response: any; params: { id: string } },
+  { response, params }: { response: Response; params: { id: string } },
 ) => {
   const product = products.find((product) => product.id === params.id);
 
@@ -44,8 +45,8 @@ const getProduct = (
 
 const addProduct = async (
   { request, response }: {
-    request: any;
-    response: any;
+    request: Request;
+    response: Response;
   },
 ) => {
   const body = await request.body();
@@ -67,7 +68,7 @@ const addProduct = async (
 };
 
 const deleteProduct = (
-  { response, params }: { response: any; params: { id: string } },
+  { response, params }: { response: Response; params: { id: string } },
 ) => {
   const product = products.find((product) => product.id === params.id);
 
@@ -91,8 +92,8 @@ const deleteProduct = (
 
 const updateProduct = async (
   { request, response, params }: {
-    request: any;
-    response: any;
+    request: Request;
+    response: Response;
     params: { id: string };
   },
 ) => {
